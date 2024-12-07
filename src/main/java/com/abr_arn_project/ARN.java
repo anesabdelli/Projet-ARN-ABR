@@ -5,36 +5,18 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 
-/**
- * Implémentation de l'interface Collection basée sur les arbres rouges et noirs (ARN). 
- * Les éléments sont ordonnés selon l'ordre naturel ou selon un Comparateur fourni à la création.
- * 
- * @param <E> le type des éléments stockés dans l'arbre
- * 
- * @author Anes ABDELLI
- */
 public class ARN<E> extends AbstractCollection<E> {
     private Noeud racine;
     private int taille;
     private Comparator<? super E> cmp;
 
-    /**
-     * Représente un noeud dans l'arbre.
-     * Chaque noeud a une clé et une couleur associée ("R" pour rouge, "N" pour noir).
-     */
     public class Noeud {
-        private E cle;  // L'attribut cle est maintenant privé
-        private String couleur; // "R" pour Rouge, "N" pour Noir
+        private E cle;
+        private String couleur; // "R" for Red, "N" for Black
         Noeud gauche;
         Noeud droit;
         Noeud pere;
 
-        /**
-         * Crée un nouveau noeud contenant une clé et une couleur.
-         *
-         * @param cle la clé stockée dans le noeud
-         * @param couleur la couleur du noeud ("R" ou "N")
-         */
         Noeud(E cle, String couleur) {
             this.cle = cle;
             this.couleur = couleur;
@@ -43,29 +25,14 @@ public class ARN<E> extends AbstractCollection<E> {
             this.pere = null;
         }
 
-        /**
-         * Getter pour l'attribut cle.
-         *
-         * @return la clé du noeud
-         */
         public E getCle() {
             return cle;
         }
 
-        /**
-         * Getter pour l'attribut couleur.
-         *
-         * @return la couleur du noeud
-         */
         public String getCouleur() {
             return couleur;
         }
 
-        /**
-         * Trouve le noeud avec la clé minimale dans le sous-arbre actuel.
-         *
-         * @return le noeud avec la clé minimale
-         */
         Noeud minimum() {
             Noeud x = this;
             while (x.gauche != null) {
@@ -74,11 +41,6 @@ public class ARN<E> extends AbstractCollection<E> {
             return x;
         }
 
-        /**
-         * Trouve le successeur du noeud courant dans l'ordre des clés.
-         *
-         * @return le noeud successeur ou null si ce noeud est le plus grand
-         */
         Noeud suivant() {
             Noeud x = this;
             if (x.droit != null) {
@@ -93,31 +55,18 @@ public class ARN<E> extends AbstractCollection<E> {
         }
     }
 
-    /**
-     * Constructeur par défaut. Les éléments seront ordonnés selon l'ordre naturel.
-     */
     public ARN() {
         racine = null;
         taille = 0;
         cmp = (x, y) -> ((Comparable<E>) x).compareTo(y);
     }
 
-    /**
-     * Constructeur avec comparateur. Les éléments seront ordonnés selon le comparateur fourni.
-     *
-     * @param cmp le comparateur à utiliser
-     */
     public ARN(Comparator<? super E> cmp) {
         this.cmp = cmp;
         racine = null;
         taille = 0;
     }
 
-    /**
-     * Constructeur à partir d'une collection. Les éléments sont copiés et ordonnés selon l'ordre naturel.
-     *
-     * @param c la collection source
-     */
     public ARN(Collection<? extends E> c) {
         this();
         addAll(c);
@@ -133,12 +82,6 @@ public class ARN<E> extends AbstractCollection<E> {
         return taille;
     }
 
-    /**
-     * Recherche une clé dans l'arbre.
-     *
-     * @param o la clé à rechercher
-     * @return le noeud contenant la clé ou null si la clé est absente
-     */
     public Noeud rechercher(Object o) {
         Noeud x = racine;
         while (x != null && cmp.compare(x.cle, (E) o) != 0) {
@@ -147,15 +90,9 @@ public class ARN<E> extends AbstractCollection<E> {
         return x;
     }
 
-    /**
-     * Recherche et insère une clé dans l'arbre.
-     *
-     * @param o la clé à ajouter
-     * @return true si l'ajout a réussi, false si la clé existe déjà
-     */
     @Override
     public boolean add(Object o) {
-        Noeud z = new Noeud((E) o, "R");  // Nouveau noeud rouge par défaut
+        Noeud z = new Noeud((E) o, "R");  // New node is initially red
         Noeud x = racine;
         Noeud y = null;
 
@@ -177,16 +114,14 @@ public class ARN<E> extends AbstractCollection<E> {
         }
         z.pere = y;
         taille++;
-        fixAfterInsertion(z); // Ajuste les couleurs après insertion
+        // Fix the colors after insertion (simplified, needs to be adjusted for the full RB tree property)
+        fixAfterInsertion(z);
         return true;
     }
 
-    /**
-     * Fixe les couleurs des noeuds pour maintenir les propriétés de l'ARN après l'insertion.
-     *
-     * @param z le noeud récemment ajouté
-     */
     private void fixAfterInsertion(Noeud z) {
+        // Fix the color of nodes to maintain Red-Black Tree properties
+        // For simplicity, this is not a full fixup, just a placeholder to mark color handling
         while (z != racine && "R".equals(z.pere.couleur)) {
             if (z.pere == z.pere.pere.gauche) {
                 Noeud y = z.pere.pere.droit;
@@ -222,14 +157,9 @@ public class ARN<E> extends AbstractCollection<E> {
                 }
             }
         }
-        racine.couleur = "N"; // La racine est toujours noire
+        racine.couleur = "N"; // root is always black
     }
 
-    /**
-     * Effectue une rotation gauche autour d'un noeud.
-     *
-     * @param x le noeud autour duquel effectuer la rotation
-     */
     private void rotateLeft(Noeud x) {
         Noeud y = x.droit;
         x.droit = y.gauche;
@@ -248,11 +178,6 @@ public class ARN<E> extends AbstractCollection<E> {
         x.pere = y;
     }
 
-    /**
-     * Effectue une rotation droite autour d'un noeud.
-     *
-     * @param x le noeud autour duquel effectuer la rotation
-     */
     private void rotateRight(Noeud x) {
         Noeud y = x.gauche;
         x.gauche = y.droit;
@@ -289,7 +214,11 @@ public class ARN<E> extends AbstractCollection<E> {
 
     @Override
     public boolean remove(Object o) {
-        // Suppression d'un élément à implémenter
+        Noeud x = rechercher(o);
+        if (x != null) {
+            supprimer(x);
+            return true;
+        }
         return false;
     }
 
@@ -299,19 +228,89 @@ public class ARN<E> extends AbstractCollection<E> {
         taille = 0;
     }
 
+    public Noeud supprimer(Noeud z) {
+        Noeud a;
+        Noeud b = (z.gauche == null || z.droit == null) ? z : z.suivant();
+        a = (b.gauche != null) ? b.gauche : b.droit;
+
+        if (a != null) {
+            a.pere = b.pere;
+        }
+        if (b.pere == null) {
+            racine = a;
+        } else if (b == b.pere.gauche) {
+            b.pere.gauche = a;
+        } else {
+            b.pere.droit = a;
+        }
+        if (b != z) {
+            z.cle = b.cle;
+        }
+        taille--;
+        return b;
+    }
+
     private class ARNIterator implements Iterator<E> {
-        private Noeud courant = racine;
+        private Noeud prec, suiv;
+
+        public ARNIterator() {
+            prec = null;
+            suiv = (racine == null) ? null : racine.minimum();
+        }
 
         @Override
         public boolean hasNext() {
-            return courant != null;
+            return suiv != null;
         }
 
         @Override
         public E next() {
-            E res = courant.cle;
-            courant = courant.suivant();
-            return res;
+            if (!hasNext()) {
+                throw new java.util.NoSuchElementException();
+            }
+            prec = suiv;
+            suiv = suiv.suivant();
+            return prec.cle;
         }
+
+        @Override
+        public void remove() {
+            if (prec == null) {
+                throw new IllegalStateException();
+            }
+            Noeud nodeToRemove = prec;
+            suiv = supprimer(nodeToRemove);
+            prec = null;
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuffer buf = new StringBuffer();
+        toString(racine, buf, "", maxStrLen(racine));
+        return buf.toString();
+    }
+
+    private void toString(Noeud x, StringBuffer buf, String path, int len) {
+        if (x == null) return;
+        toString(x.droit, buf, path + "D", len);
+        for (int i = 0; i < path.length(); i++) {
+            for (int j = 0; j < len + 6; j++) buf.append(' ');
+            char c = (i == path.length() - 1) ? '+' : (path.charAt(i) != path.charAt(i + 1) ? '|' : ' ');
+            buf.append(c);
+        }
+        buf.append("-- " + x.cle + "(" + x.couleur + ")");
+        if (x.gauche != null || x.droit != null) {
+            buf.append(" --");
+            for (int j = x.cle.toString().length(); j < len; j++) buf.append('-');
+            buf.append('|');
+        }
+        buf.append("\n");
+        toString(x.gauche, buf, path + "G", len);
+    }
+
+    private int maxStrLen(Noeud x) {
+        return x == null ? 0 : Math.max(x.cle.toString().length(),
+                Math.max(maxStrLen(x.gauche), maxStrLen(x.droit)));
     }
 }
