@@ -28,7 +28,7 @@ Un projet Java implémentant des structures d'arbres binaires de recherche (ABR)
 |                                                                                                   |
 |    1️⃣ Cloner le dépôt : Commencez par cloner le projet sur votre machine.                         |
 |       Exécutez la commande suivante dans votre terminal :                                         |
-|       `git clone https://github.com/votre-utilisateur/abr-arn-projet.git`                         |
+|       `git clone https://github.com/anesabdelli/abr-arn-projet.git`                         |
 |                                                                                                   |
 |    2️⃣ Installation des dépendances : Assurez-vous d'avoir toutes les dépendances nécessaires.     |
 |       Vous pouvez les installer avec Maven ou Gradle.                                             |
