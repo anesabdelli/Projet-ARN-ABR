@@ -19,7 +19,7 @@ ABDELLI Anes
 
 1️⃣ **Cloner le dépôt** : Commencez par cloner le projet sur votre machine.  
    Exécutez la commande suivante dans votre terminal :  
-   `git clone https://github.com/votre-utilisateur/abr-arn-projet.git`
+   `git clone https://github.com/anesabdelli/abr-arn-projet.git`
 
 2️⃣ **Installation des dépendances** : Assurez-vous d'avoir toutes les dépendances nécessaires.  
    Vous pouvez les installer avec Maven ou Gradle.  
@@ -41,15 +41,21 @@ ABDELLI Anes
 - ✅ Tests unitaires pour valider les fonctionnalités principales.
 - ✅ Comparateur pour personnaliser l'ordre des éléments dans les arbres.
 
-## --------------  EXEMPLES D'UTILISATION  ---------------- #
+-------------- TESTS UNITAIRES ----------------
+EXECUTION DES TESTS
+Pour exécuter les tests unitaires, utilisez Maven ou Gradle.
 
-### EXEMPLES D'UTILISATION D'UN ARN
+[Maven] : mvn test
+[Gradle] : gradle test
 
-**Insertion et Recherche :**
+Les tests valideront les fonctionnalités principales telles que l'ajout, la recherche, et l'itération sur les éléments dans les arbres ABR et ARN.
 
-```java
-ARN<Integer> arn = new ARN<>();
-arn.add(10);
-arn.add(20);
-System.out.println(arn.contains(10));  // true
-System.out.println(arn.contains(30));  // false
+-------------- AUTEUR ----------------
+AUTEUR
+ABDELLI Anes : Création et implémentation des structures de données ABR et ARN en Java.
+
+-------------- LICENCE ----------------
+LICENCE
+Ce projet est sous Licence MIT.
+
+
