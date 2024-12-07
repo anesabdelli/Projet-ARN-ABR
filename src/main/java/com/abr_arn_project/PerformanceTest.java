@@ -8,9 +8,9 @@ import java.util.Random;
 
 public class PerformanceTest {
     public static void main(String[] args) {
-        // Create a file to export the results
+        // Creer un fichier pour exporter les resultats
         try (PrintWriter writer = new PrintWriter("performance_results.txt")) {
-            // Execute tests with different sizes of data
+            // Executer les tests avec differentes tailles de donnees
             runTest(1_000_000, writer);
             runTest(10_000_000, writer);
             runTest(100_000_000, writer);
@@ -20,23 +20,23 @@ public class PerformanceTest {
     }
 
     private static void runTest(int size, PrintWriter writer) {
-        // Display and write the test size
-        System.out.println("Running test with " + size + " elements");
-        writer.println("Running test with " + size + " elements");
-        writer.flush();  // Ensure the data is written to the file immediately
+        // Afficher et ecrire la taille du test
+        System.out.println("Execution du test avec " + size + " elements");
+        writer.println("Execution du test avec " + size + " elements");
+        writer.flush();  // S'assurer que les donnees sont ecrites dans le fichier immediatement
 
-        // Initialize ARN and ABR trees
+        // Initialiser les arbres ARN et ABR
         ARN<Integer> arn = new ARN<>();
         ABR<Integer> abr = new ABR<>();
 
-        // Generate random values
+        // Generer des valeurs aleatoires
         ArrayList<Integer> randomValues = new ArrayList<>();
         Random rand = new Random();
         for (int i = 0; i < size; i++) {
             randomValues.add(rand.nextInt(100));
         }
 
-        // Average case: Insertion of values in random order
+        // Cas moyen : Insertion des valeurs dans un ordre aleatoire
         Collections.shuffle(randomValues);
         long startTime = System.nanoTime();
         for (Integer value : randomValues) {
@@ -44,9 +44,9 @@ public class PerformanceTest {
         }
         long endTime = System.nanoTime();
         double arnRandomInsertTime = (endTime - startTime) / 1_000_000_000.0;
-        System.out.println("Insertion time for ARN (random order): " + arnRandomInsertTime + " s");
-        writer.println("Insertion time for ARN (random order): " + arnRandomInsertTime + " s");
-        writer.flush();  // Ensure the data is written to the file immediately
+        System.out.println("Temps d'insertion pour ARN (ordre aleatoire): " + arnRandomInsertTime + " s");
+        writer.println("Temps d'insertion pour ARN (ordre aleatoire): " + arnRandomInsertTime + " s");
+        writer.flush();  // S'assurer que les donnees sont ecrites dans le fichier immediatement
 
         startTime = System.nanoTime();
         for (Integer value : randomValues) {
@@ -54,70 +54,70 @@ public class PerformanceTest {
         }
         endTime = System.nanoTime();
         double abrRandomInsertTime = (endTime - startTime) / 1_000_000_000.0;
-        System.out.println("Insertion time for ABR (random order): " + abrRandomInsertTime + " s");
-        writer.println("Insertion time for ABR (random order): " + abrRandomInsertTime + " s");
-        writer.flush();  // Ensure the data is written to the file immediately
+        System.out.println("Temps d'insertion pour ABR (ordre aleatoire): " + abrRandomInsertTime + " s");
+        writer.println("Temps d'insertion pour ABR (ordre aleatoire): " + abrRandomInsertTime + " s");
+        writer.flush();  // S'assurer que les donnees sont ecrites dans le fichier immediatement
 
-        // Worst case for ABR: Insertion of values in sorted order
+        // Cas pire pour ABR : Insertion des valeurs dans un ordre trie
         ArrayList<Integer> sortedValues = new ArrayList<>(randomValues);
         Collections.sort(sortedValues);
 
-        // Reset the trees before the next test
+        // Reinitialiser les arbres avant le prochain test
         arn.clear();
         abr.clear();
 
-        // Insertion in sorted order for ARN
+        // Insertion dans l'ordre trie pour ARN
         startTime = System.nanoTime();
         for (Integer value : sortedValues) {
             arn.add(value);
         }
         endTime = System.nanoTime();
         double arnSortedInsertTime = (endTime - startTime) / 1_000_000_000.0;
-        System.out.println("Insertion time for ARN (sorted order): " + arnSortedInsertTime + " s");
-        writer.println("Insertion time for ARN (sorted order): " + arnSortedInsertTime + " s");
-        writer.flush();  // Ensure the data is written to the file immediately
+        System.out.println("Temps d'insertion pour ARN (ordre trie): " + arnSortedInsertTime + " s");
+        writer.println("Temps d'insertion pour ARN (ordre trie): " + arnSortedInsertTime + " s");
+        writer.flush();  // S'assurer que les donnees sont ecrites dans le fichier immediatement
 
-        // Insertion in sorted order for ABR
+        // Insertion dans l'ordre trie pour ABR
         startTime = System.nanoTime();
         for (Integer value : sortedValues) {
             abr.add(value);
         }
         endTime = System.nanoTime();
         double abrSortedInsertTime = (endTime - startTime) / 1_000_000_000.0;
-        System.out.println("Insertion time for ABR (sorted order): " + abrSortedInsertTime + " s");
-        writer.println("Insertion time for ABR (sorted order): " + abrSortedInsertTime + " s");
-        writer.flush();  // Ensure the data is written to the file immediately
+        System.out.println("Temps d'insertion pour ABR (ordre trie): " + abrSortedInsertTime + " s");
+        writer.println("Temps d'insertion pour ABR (ordre trie): " + abrSortedInsertTime + " s");
+        writer.flush();  // S'assurer que les donnees sont ecrites dans le fichier immediatement
 
-        // Measure the search time for keys 0,...,2n-1
+        // Mesurer le temps de recherche pour les clefs 0,...,2n-1
         int n = size;
         long arnSearchTime = 0;
         long abrSearchTime = 0;
 
-        // Searching keys in ARN
+        // Recherche des clefs dans ARN
         startTime = System.nanoTime();
         for (int i = 0; i < 2 * n; i++) {
             arn.contains(i);
         }
         endTime = System.nanoTime();
         arnSearchTime = endTime - startTime;
-        System.out.println("Search time for ARN: " + arnSearchTime / 1_000_000_000.0 + " s");
-        writer.println("Search time for ARN: " + arnSearchTime / 1_000_000_000.0 + " s");
-        writer.flush();  // Ensure the data is written to the file immediately
+        System.out.println("Temps de recherche pour ARN: " + arnSearchTime / 1_000_000_000.0 + " s");
+        writer.println("Temps de recherche pour ARN: " + arnSearchTime / 1_000_000_000.0 + " s");
+        writer.flush();  // S'assurer que les donnees sont ecrites dans le fichier immediatement
 
-        // Searching keys in ABR
+        // Recherche des clefs dans ABR
         startTime = System.nanoTime();
         for (int i = 0; i < 2 * n; i++) {
             abr.contains(i);
         }
         endTime = System.nanoTime();
         abrSearchTime = endTime - startTime;
-        System.out.println("Search time for ABR: " + abrSearchTime / 1_000_000_000.0 + " s");
-        writer.println("Search time for ABR: " + abrSearchTime / 1_000_000_000.0 + " s");
-        writer.flush();  // Ensure the data is written to the file immediately
+        System.out.println("Temps de recherche pour ABR: " + abrSearchTime / 1_000_000_000.0 + " s");
+        writer.println("Temps de recherche pour ABR: " + abrSearchTime / 1_000_000_000.0 + " s");
+        writer.flush();  // S'assurer que les donnees sont ecrites dans le fichier immediatement
 
-        // Empty line to separate results of different tests
+        // Ligne vide pour separer les resultats des differents tests
         System.out.println();
         writer.println();
-        writer.flush();  // Ensure the data is written to the file immediately
+        writer.flush();  // S'assurer que les donnees sont ecrites dans le fichier immediatement
     }
 }
