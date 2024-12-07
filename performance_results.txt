@@ -1,0 +1,24 @@
+Running test with 1000000 elements
+Insertion time for ARN (random order): 0.1825444 s
+Insertion time for ABR (random order): 0.1046882 s
+Insertion time for ARN (sorted order): 0.0659499 s
+Insertion time for ABR (sorted order): 0.3839244 s
+Search time for ARN: 0.1554959 s
+Search time for ABR: 0.7243651 s
+
+Running test with 10000000 elements
+Insertion time for ARN (random order): 0.9124675 s
+Insertion time for ABR (random order): 0.5141975 s
+Insertion time for ARN (sorted order): 0.2702057 s
+Insertion time for ABR (sorted order): 1.8836834 s
+Search time for ARN: 0.6720922 s
+Search time for ABR: 4.2939454 s
+
+Running test with 100000000 elements
+Insertion time for ARN (random order): 4.9703206 s
+Insertion time for ABR (random order): 5.261587 s
+Insertion time for ARN (sorted order): 2.8569773 s
+Insertion time for ABR (sorted order): 13.4663485 s
+Search time for ARN: 6.3823293 s
+Search time for ABR: 41.1938857 s
+
