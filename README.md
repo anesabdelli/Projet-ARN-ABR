@@ -51,7 +51,6 @@ Pour exécuter les tests unitaires, utilisez Maven ou Gradle.
 Les tests valideront les fonctionnalités principales telles que l'ajout, la recherche, et l'itération sur les éléments dans les arbres ABR et ARN.
 
 ## --------------  AUTEUR  ---------------- #
-AUTEUR
 ABDELLI Anes : Création et implémentation des structures de données ABR et ARN en Java.
 
 ## --------------  LICENCE  ---------------- #
