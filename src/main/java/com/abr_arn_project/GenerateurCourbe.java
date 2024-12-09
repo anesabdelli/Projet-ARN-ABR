@@ -56,7 +56,7 @@ public class GenerateurCourbe {
     }
 
     // Creer l'ensemble de donnees pour les temps d'insertion
-    private static DefaultCategoryDataset creerInsertionDataset() {
+    public static DefaultCategoryDataset creerInsertionDataset() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         // Exemple de donnees pour les temps d'insertion
@@ -80,7 +80,7 @@ public class GenerateurCourbe {
     }
 
     // Creer l'ensemble de donnees pour les temps de recherche
-    private static DefaultCategoryDataset creerSearchDataset() {
+    public static DefaultCategoryDataset creerSearchDataset() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         // Exemple de donnees pour les temps de recherche

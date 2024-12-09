@@ -95,6 +95,11 @@ public class ARN<E> extends AbstractCollection<E> {
         Noeud z = new Noeud((E) o, "R");  // New node is initially red
         Noeud x = racine;
         Noeud y = null;
+        
+        // gestion d'erreur
+        if (o == null) {
+        throw new NullPointerException("L'élément à insérer ne peut pas être null");
+    }
 
         while (x != null) {
             y = x;

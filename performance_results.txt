@@ -1,24 +1,24 @@
-Execution du test avec 1000000 elements
-Temps d'insertion pour ARN (ordre aleatoire): 0.1297051 s
-Temps d'insertion pour ABR (ordre aleatoire): 0.0650735 s
-Temps d'insertion pour ARN (ordre trie): 0.042346 s
-Temps d'insertion pour ABR (ordre trie): 0.1966304 s
-Temps de recherche pour ARN: 0.0774228 s
-Temps de recherche pour ABR: 0.5240254 s
+Exécution du test avec 1000000 éléments
+Temps d'insertion pour ARN (ordre aléatoire): 0.1346058 s
+Temps d'insertion pour ABR (ordre aléatoire): 0.0943274 s
+Temps d'insertion pour ARN (ordre trié): 0.0529629 s
+Temps d'insertion pour ABR (ordre trié): 0.2798231 s
+Temps de recherche pour ARN: 0.0810016 s
+Temps de recherche pour ABR: 0.7679939 s
 
-Execution du test avec 10000000 elements
-Temps d'insertion pour ARN (ordre aleatoire): 0.602571 s
-Temps d'insertion pour ABR (ordre aleatoire): 0.5203176 s
-Temps d'insertion pour ARN (ordre trie): 0.2894816 s
-Temps d'insertion pour ABR (ordre trie): 1.7458206 s
-Temps de recherche pour ARN: 0.7647646 s
-Temps de recherche pour ABR: 3.9995748 s
+Exécution du test avec 10000000 éléments
+Temps d'insertion pour ARN (ordre aléatoire): 0.9117944 s
+Temps d'insertion pour ABR (ordre aléatoire): 0.6247936 s
+Temps d'insertion pour ARN (ordre trié): 0.5815513 s
+Temps d'insertion pour ABR (ordre trié): 2.4630019 s
+Temps de recherche pour ARN: 0.7267897 s
+Temps de recherche pour ABR: 4.9732348 s
 
-Execution du test avec 100000000 elements
-Temps d'insertion pour ARN (ordre aleatoire): 6.8478133 s
-Temps d'insertion pour ABR (ordre aleatoire): 4.569227 s
-Temps d'insertion pour ARN (ordre trie): 2.2833264 s
-Temps d'insertion pour ABR (ordre trie): 11.6758488 s
-Temps de recherche pour ARN: 5.7024017 s
-Temps de recherche pour ABR: 38.9753584 s
+Exécution du test avec 100000000 éléments
+Temps d'insertion pour ARN (ordre aléatoire): 5.1884314 s
+Temps d'insertion pour ABR (ordre aléatoire): 4.3706024 s
+Temps d'insertion pour ARN (ordre trié): 4.0718608 s
+Temps d'insertion pour ABR (ordre trié): 13.6804649 s
+Temps de recherche pour ARN: 4.1437689 s
+Temps de recherche pour ABR: 49.3190753 s
 
