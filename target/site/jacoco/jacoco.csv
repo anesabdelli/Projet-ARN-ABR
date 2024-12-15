@@ -1,0 +1,10 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+algoavancee_arn_abr,com.abr_arn_project,ABR.ABRIterator,26,40,4,4,7,9,4,4,1,3
+algoavancee_arn_abr,com.abr_arn_project,Main,322,0,4,0,72,0,4,0,2,0
+algoavancee_arn_abr,com.abr_arn_project,ARN,13,616,6,82,1,142,6,57,0,19
+algoavancee_arn_abr,com.abr_arn_project,ABR,23,369,9,47,2,82,8,36,0,16
+algoavancee_arn_abr,com.abr_arn_project,ARN.Noeud,3,58,0,8,1,20,1,8,1,4
+algoavancee_arn_abr,com.abr_arn_project,ABR.Noeud,3,52,0,8,1,18,1,7,1,3
+algoavancee_arn_abr,com.abr_arn_project,GenerateurCourbe,6,153,0,0,3,31,1,3,1,3
+algoavancee_arn_abr,com.abr_arn_project,ARN.ARNIterator,26,40,4,4,7,9,4,4,1,3
+algoavancee_arn_abr,com.abr_arn_project,TestPerformance,3,293,0,14,2,70,0,10,0,3

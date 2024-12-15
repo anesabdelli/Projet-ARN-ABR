@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ABR.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algoavancee_arn_abr</a> &gt; <a href="index.source.html" class="el_package">com.abr_arn_project</a> &gt; <span class="el_source">ABR.java</span></div><h1>ABR.java</h1><pre class="source lang-java linenums">package com.abr_arn_project;
+
+/**
+ * Implémentation de l'interface Collection basée sur les arbres binaires de recherche (ABR). 
+ * Les éléments sont ordonnés selon l'ordre naturel ou selon un Comparateur fourni à la création.
+ * 
+ * @param &lt;E&gt; le type des éléments stockés dans l'arbre
+ * 
+ * @author Anes ABDELLI
+ */
+
+import java.util.AbstractCollection;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
+
+public class ABR&lt;E&gt; extends AbstractCollection&lt;E&gt; {
+
+    private Noeud racine;
+    private int taille;
+    private Comparator&lt;? super E&gt; cmp;
+
+    /**
+     * Représente un noeud dans l'arbre.
+     */
+    public class Noeud {
+        private E cle;  // L'attribut cle est maintenant privé
+        Noeud gauche;
+        Noeud droit;
+        Noeud pere;
+
+        /**
+         * Crée un nouveau noeud contenant une clé.
+         *
+         * @param cle la clé stockée dans le noeud
+         */
+<span class="fc" id="L37">        Noeud(E cle) {</span>
+<span class="fc" id="L38">            this.cle = cle;</span>
+<span class="fc" id="L39">            this.gauche = null;</span>
+<span class="fc" id="L40">            this.droit = null;</span>
+<span class="fc" id="L41">            this.pere = null;</span>
+<span class="fc" id="L42">        }</span>
+
+        /**
+         * Getter pour l'attribut cle.
+         *
+         * @return la clé du noeud
+         */
+        public E getCle() {
+<span class="nc" id="L50">            return cle;</span>
+        }
+
+        /**
+         * Trouve le noeud avec la clé minimale dans le sous-arbre actuel.
+         *
+         * @return le noeud avec la clé minimale
+         */
+        Noeud minimum() {
+<span class="fc" id="L59">            Noeud x = this;</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            while (x.gauche != null) {</span>
+<span class="fc" id="L61">                x = x.gauche;</span>
+            }
+<span class="fc" id="L63">            return x;</span>
+        }
+
+        /**
+         * Trouve le successeur du noeud courant dans l'ordre des clés.
+         *
+         * @return le noeud successeur ou null si ce noeud est le plus grand
+         */
+        Noeud suivant() {
+<span class="fc" id="L72">            Noeud x = this;</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">            if (x.droit != null) {</span>
+<span class="fc" id="L74">                return x.droit.minimum();</span>
+            }
+<span class="fc" id="L76">            Noeud y = x.pere;</span>
+<span class="fc bfc" id="L77" title="All 4 branches covered.">            while (y != null &amp;&amp; x == y.droit) {</span>
+<span class="fc" id="L78">                x = y;</span>
+<span class="fc" id="L79">                y = y.pere;</span>
+            }
+<span class="fc" id="L81">            return y;</span>
+        }
+    }
+
+    /**
+     * Constructeur par défaut. Les éléments seront ordonnés selon l'ordre naturel.
+     */
+<span class="fc" id="L88">    public ABR() {</span>
+<span class="fc" id="L89">        racine = null;</span>
+<span class="fc" id="L90">        taille = 0;</span>
+<span class="fc" id="L91">        cmp = (x, y) -&gt; ((Comparable&lt;E&gt;) x).compareTo(y);</span>
+<span class="fc" id="L92">    }</span>
+
+    /**
+     * Constructeur avec comparateur. Les éléments seront ordonnés selon le comparateur fourni.
+     *
+     * @param cmp le comparateur à utiliser
+     */
+<span class="fc" id="L99">    public ABR(Comparator&lt;? super E&gt; cmp) {</span>
+<span class="fc" id="L100">        this.cmp = cmp;</span>
+<span class="fc" id="L101">        racine = null;</span>
+<span class="fc" id="L102">        taille = 0;</span>
+<span class="fc" id="L103">    }</span>
+
+    /**
+     * Constructeur à partir d'une collection. Les éléments sont copiés et ordonnés selon l'ordre naturel.
+     *
+     * @param c la collection source
+     */
+    public ABR(Collection&lt;? extends E&gt; c) {
+<span class="fc" id="L111">        this();</span>
+<span class="fc" id="L112">        addAll(c);</span>
+<span class="fc" id="L113">    }</span>
+
+    @Override
+    public Iterator&lt;E&gt; iterator() {
+<span class="fc" id="L117">        return new ABRIterator();</span>
+    }
+
+    @Override
+    public int size() {
+<span class="fc" id="L122">        return taille;</span>
+    }
+
+    /**
+     * Recherche une clé dans l'arbre.
+     *
+     * @param o la clé à rechercher
+     * @return le noeud contenant la clé ou null si la clé est absente
+     */
+    public Noeud rechercher(Object o) {
+<span class="fc" id="L132">        Noeud x = racine;</span>
+<span class="fc bfc" id="L133" title="All 4 branches covered.">        while (x != null &amp;&amp; cmp.compare(x.cle, (E) o) != 0) {</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">            x = cmp.compare(x.cle, (E) o) &gt; 0 ? x.gauche : x.droit;</span>
+        }
+<span class="fc" id="L136">        return x;</span>
+    }
+
+    /**
+     * Supprime un noeud de l'arbre.
+     *
+     * @param z le noeud à supprimer
+     * @return le successeur logique du noeud supprimé
+     */
+    public Noeud supprimer(Noeud z) {
+        Noeud a;
+<span class="pc bpc" id="L147" title="3 of 4 branches missed.">        Noeud b = (z.gauche == null || z.droit == null) ? z : z.suivant();</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">        a = (b.gauche != null) ? b.gauche : b.droit;</span>
+
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (a != null) {</span>
+<span class="fc" id="L151">            a.pere = b.pere;</span>
+        }
+<span class="fc bfc" id="L153" title="All 2 branches covered.">        if (b.pere == null) {</span>
+<span class="fc" id="L154">            racine = a;</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">        } else if (b == b.pere.gauche) {</span>
+<span class="nc" id="L156">            b.pere.gauche = a;</span>
+        } else {
+<span class="fc" id="L158">            b.pere.droit = a;</span>
+        }
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">        if (b != z) {</span>
+<span class="nc" id="L161">            z.cle = b.cle;</span>
+        }
+<span class="fc" id="L163">        taille--;</span>
+<span class="fc" id="L164">        return b;</span>
+    }
+
+    @Override
+    public boolean add(Object o) {
+<span class="fc" id="L169">        Noeud z = new Noeud((E) o);</span>
+<span class="fc" id="L170">        Noeud x = racine;</span>
+<span class="fc" id="L171">        Noeud y = null;</span>
+
+<span class="fc bfc" id="L173" title="All 2 branches covered.">        while (x != null) {</span>
+<span class="fc" id="L174">            y = x;</span>
+<span class="fc" id="L175">            int cmpResult = cmp.compare(x.cle, z.cle);</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">            if (cmpResult == 0) {</span>
+<span class="fc" id="L177">                return false;</span>
+            }
+<span class="fc bfc" id="L179" title="All 2 branches covered.">            x = cmpResult &gt; 0 ? x.gauche : x.droit;</span>
+<span class="fc" id="L180">        }</span>
+
+<span class="fc bfc" id="L182" title="All 2 branches covered.">        if (y == null) {</span>
+<span class="fc" id="L183">            racine = z;</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        } else if (cmp.compare(y.cle, z.cle) &gt; 0) {</span>
+<span class="fc" id="L185">            y.gauche = z;</span>
+        } else {
+<span class="fc" id="L187">            y.droit = z;</span>
+        }
+<span class="fc" id="L189">        z.pere = y;</span>
+<span class="fc" id="L190">        taille++;</span>
+<span class="fc" id="L191">        return true;</span>
+    }
+
+    @Override
+    public boolean addAll(Collection&lt;? extends E&gt; c) {
+<span class="fc" id="L196">        boolean modified = false;</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">        for (E e : c) {</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">            if (add(e)) {</span>
+<span class="fc" id="L199">                modified = true;</span>
+            }
+<span class="fc" id="L201">        }</span>
+<span class="fc" id="L202">        return modified;</span>
+    }
+
+    @Override
+    public boolean contains(Object o) {
+<span class="fc bfc" id="L207" title="All 2 branches covered.">        return rechercher(o) != null;</span>
+    }
+
+    @Override
+    public boolean remove(Object o) {
+<span class="fc" id="L212">        Noeud x = rechercher(o);</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">        if (x != null) {</span>
+<span class="fc" id="L214">            supprimer(x);</span>
+<span class="fc" id="L215">            return true;</span>
+        }
+<span class="fc" id="L217">        return false;</span>
+    }
+
+    @Override
+    public void clear() {
+<span class="fc" id="L222">        racine = null;</span>
+<span class="fc" id="L223">        taille = 0;</span>
+<span class="fc" id="L224">    }</span>
+
+    /**
+     * Représente un itérateur pour l'arbre binaire de recherche.
+     */
+    private class ABRIterator implements Iterator&lt;E&gt; {
+        private Noeud prec, suiv;
+
+<span class="fc" id="L232">        public ABRIterator() {</span>
+<span class="fc" id="L233">            prec = null;</span>
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">            suiv = (racine == null) ? null : racine.minimum();</span>
+<span class="fc" id="L235">        }</span>
+
+        @Override
+        public boolean hasNext() {
+<span class="fc bfc" id="L239" title="All 2 branches covered.">            return suiv != null;</span>
+        }
+
+        @Override
+        public E next() {
+<span class="pc bpc" id="L244" title="1 of 2 branches missed.">            if (!hasNext()) {</span>
+<span class="nc" id="L245">                throw new java.util.NoSuchElementException();</span>
+            }
+<span class="fc" id="L247">            prec = suiv;</span>
+<span class="fc" id="L248">            suiv = suiv.suivant();</span>
+<span class="fc" id="L249">            return prec.cle;</span>
+        }
+
+        @Override
+        public void remove() {
+<span class="nc bnc" id="L254" title="All 2 branches missed.">            if (prec == null) {</span>
+<span class="nc" id="L255">                throw new IllegalStateException();</span>
+            }
+<span class="nc" id="L257">            Noeud nodeToRemove = prec;</span>
+<span class="nc" id="L258">            suiv = supprimer(nodeToRemove);</span>
+<span class="nc" id="L259">            prec = null;</span>
+<span class="nc" id="L260">        }</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L265">        StringBuffer buf = new StringBuffer();</span>
+<span class="fc" id="L266">        toString(racine, buf, &quot;&quot;, maxStrLen(racine));</span>
+<span class="fc" id="L267">        return buf.toString();</span>
+    }
+
+    private void toString(Noeud x, StringBuffer buf, String path, int len) {
+<span class="fc bfc" id="L271" title="All 2 branches covered.">        if (x == null) return;</span>
+<span class="fc" id="L272">        toString(x.droit, buf, path + &quot;D&quot;, len);</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">        for (int i = 0; i &lt; path.length(); i++) {</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">            for (int j = 0; j &lt; len + 6; j++) buf.append(' ');</span>
+<span class="fc bfc" id="L275" title="All 4 branches covered.">            char c = (i == path.length() - 1) ? '+' : (path.charAt(i) != path.charAt(i + 1) ? '|' : ' ');</span>
+<span class="fc" id="L276">            buf.append(c);</span>
+        }
+<span class="fc" id="L278">        buf.append(&quot;-- &quot; + x.cle);</span>
+<span class="pc bpc" id="L279" title="1 of 4 branches missed.">        if (x.gauche != null || x.droit != null) {</span>
+<span class="fc" id="L280">            buf.append(&quot; --&quot;);</span>
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">            for (int j = x.cle.toString().length(); j &lt; len; j++) buf.append('-');</span>
+<span class="fc" id="L282">            buf.append('|');</span>
+        }
+<span class="fc" id="L284">        buf.append(&quot;\n&quot;);</span>
+<span class="fc" id="L285">        toString(x.gauche, buf, path + &quot;G&quot;, len);</span>
+<span class="fc" id="L286">    }</span>
+
+    private int maxStrLen(Noeud x) {
+<span class="fc bfc" id="L289" title="All 2 branches covered.">        return x == null ? 0 : Math.max(x.cle.toString().length(),</span>
+<span class="fc" id="L290">                Math.max(maxStrLen(x.gauche), maxStrLen(x.droit)));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

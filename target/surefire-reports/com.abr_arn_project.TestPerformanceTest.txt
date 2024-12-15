@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.abr_arn_project.TestPerformanceTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 137.0 s -- in com.abr_arn_project.TestPerformanceTest
