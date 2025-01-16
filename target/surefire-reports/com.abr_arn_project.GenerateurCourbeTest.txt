@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.abr_arn_project.GenerateurCourbeTest
--------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.278 s -- in com.abr_arn_project.GenerateurCourbeTest
